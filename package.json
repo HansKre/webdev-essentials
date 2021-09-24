@@ -1,0 +1,15 @@
+{
+  "name": "webdev-essentials",
+  "version": "1.0.0",
+  "description": "A collection of code-snippets and useful info essential for web development.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:HansKre/webdev-essentials.git"
+  },
+  "author": "Hans Krebs",
+  "license": "ISC"
+}
