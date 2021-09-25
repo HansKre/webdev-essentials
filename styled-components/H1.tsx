@@ -1,15 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Role, setRoleColor } from '../../styles/mainTheme';
 
-export enum Role {
-  success = 'limegreen',
-  warning = '#0275b2',
-  error = 'darkred',
-}
-const H1 = styled.h1<{
-  styling: keyof typeof Role;
-}>`
-  color: ${(props) => Role[props.styling]};
+const H1 = styled.h1<{ role: keyof typeof Role }>`
   text-align: center;
+
+  ${(props) => setRoleColor}
 `;
 
 export default H1;
