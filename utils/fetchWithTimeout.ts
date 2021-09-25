@@ -1,9 +1,12 @@
-export default async function fetchWithTimeout(url, options = {}) {
+export default async function fetchWithTimeout(
+  url,
+  options?: { timeout?: number }
+) {
   const { timeout = 8000 } = options;
   const controller = new AbortController();
 
   // .abort() cancels the request
-  let response;
+  let response = { status: 0, statusText: '' };
   const id = setTimeout(() => {
     controller.abort();
     response = {
