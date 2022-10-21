@@ -85,6 +85,14 @@ If `npm link webdev-essentials` does not work, you can install it by running: `n
   }
   ```
 
+- Make publishing as a public package the default by adding following to `package.json`:
+
+```json
+  "publishConfig": {
+    "access": "public"
+  },
+```
+
 - To locally generate a tarball of everything that will get sent to and published on NPM to really verify and make sure it matches your expectation: `npm pack`
 - To locally test
   - in you package root: `npm link`

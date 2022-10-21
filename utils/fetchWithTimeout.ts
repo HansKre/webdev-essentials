@@ -1,10 +1,27 @@
-interface Options {
-  timeout?: number;
+interface FetchOptions {
   [rest: string]: any;
 }
 
-export default async function fetchWithTimeout(url: string, options?: Options) {
-  const timeout = options ? options.timeout : 8000;
+interface Params {
+  url: string;
+  timeout?: number;
+  options?: FetchOptions;
+}
+
+/**
+ * Wraps the standard fetch-method and cancels the request after a timeout.
+ * Default timeout is set to 8000 milliseconds.
+ *
+ * @param {string} [required] url the fetch-url
+ * @param {number} [optional] timeout the timeout in milliseconds
+ * @param {FetchOptions} [optional = 8000] options the fetch options
+ * @returns the `fetch`-Response or status: 529 with statusText: 'A Timeout Occurred'.
+ */
+export default async function fetchWithTimeout({
+  url,
+  timeout = 8000,
+  options,
+}: Params) {
   const controller = new AbortController();
 
   // .abort() cancels the request

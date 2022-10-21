@@ -13,7 +13,7 @@ export default function useAPIFetch({ url, timeout }: Props) {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchWithTimeout(url, { timeout });
+      const response = await fetchWithTimeout({ url, timeout });
       if (response && response.status === 200) {
         const json = await (response as Response).json();
         setData(json);
