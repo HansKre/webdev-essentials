@@ -1,7 +1,7 @@
 {
   "name": "webdev-essentials",
-  "version": "1.1.0",
-  "description": "A collection of code-snippets and useful info essential for web development.",
+  "version": "1.2.0",
+  "description": "A collection of useful hooks and utils for web development.",
   "scripts": {
     "build": "tsc",
     "build:check": "tsc --noEmit"

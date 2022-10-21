@@ -8,7 +8,10 @@ export default async function fetchWithTimeout(url: string, options?: Options) {
   const controller = new AbortController();
 
   // .abort() cancels the request
-  let response = { status: 0, statusText: '' };
+  let response: { status: number; statusText: string } | Response = {
+    status: 500,
+    statusText: 'Internal Server Error',
+  };
   const id = setTimeout(() => {
     controller.abort();
     response = {
@@ -25,6 +28,6 @@ export default async function fetchWithTimeout(url: string, options?: Options) {
     // 'DOMException: The user aborted a request.'
   } finally {
     clearTimeout(id);
-    return response;
   }
+  return response;
 }

@@ -1,51 +1,31 @@
 import { useState, useEffect } from 'react';
-import { APIResponse } from '../types';
 import fetchWithTimeout from '../utils/fetchWithTimeout';
 
-const BASE_URL = '/api/mock';
-
 interface Props {
-  guid: string;
+  url: string;
+  timeout?: number;
 }
 
-export default function useAPIFetch({ guid }: Props) {
+export default function useAPIFetch({ url, timeout }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<{ code: number; text: string }>();
-  const [data, setData] = useState<APIResponse>();
+  const [data, setData] = useState();
 
-  useEffect(() => {
-    async function doFetch() {
-      const response = await fetchWithTimeout(`/api/mock/${guid}`);
-    }
-
-    if (guid) {
+  useEffect(async () => {
+    if (url) {
       setError(undefined);
       setIsLoading(true);
-      fetch(`/api/mock/${guid}`).then((response) => {
-        if (response.status === 200) {
-          response.json().then((apiResponse: APIResponse) => {
-            if (apiResponse.guid !== guid) {
-              console.log(
-                `GUID=${apiResponse.guid} from API-Response did not match requested GUID=${guid}.`
-              );
-              setIsLoading(false);
-              setError({
-                code: 500,
-                text: 'Server responded with invalid document.',
-              });
-            }
-            setData(apiResponse);
-          });
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
-          setError({ code: response.status, text: response.statusText });
-        }
-      });
-    } else {
-      // not needed. guid is always retrieved from query a little bit delayed
+      const response = await fetchWithTimeout(url, { timeout });
+      if (response && response.status === 200) {
+        const json = await (response as Response).json();
+        setData(json);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        setError({ code: response.status, text: response.statusText });
+      }
     }
-  }, [guid]);
+  }, [url]);
 
   return { isLoading, error, data };
 }
