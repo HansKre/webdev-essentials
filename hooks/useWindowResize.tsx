@@ -1,30 +1,41 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+type Props = {
+  selector?: string;
+};
+
+type Dimensions = {
+  width: number;
+  height: number;
+};
 
 /**
- * Listens for `resize`-event of the window and returns window.innerWidth.
- * Note: every width-change is a state-change and hence a re-render!
- * @returns current window width and height
+ * Subscribes to `window.onresize`-event and notifies about dimension-changes.
+ * @param {string} [selector] - An optional CSS-Selector
+ * @returns {Dimensions} either current innerWidth and innerHeight of window or the clientWidth and clientHeight of the element specified by selector every time a window-resize-event happens.
+ *
+ * @example
+ * const { width, height } = useWindowResize({ selector: "#root main > article[tabIndex='-1']" })
  */
-export default function useWindowSize() {
-  const [windowSize, setWindowSize] = useState<{
-    width: number;
-    height: number;
-  }>({
+export function useWindowResize({ selector }: Props): Dimensions {
+  const [dimensions, setDimensions] = useState<Dimensions>({
     width: 0,
     height: 0,
   });
   useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
+    function updateDimensions() {
+      let element: Element | null | undefined;
+      if (selector) {
+        element = document.querySelector(selector);
+      }
+      setDimensions({
+        width: element?.clientWidth || window.innerWidth,
+        height: element?.clientHeight || window.innerHeight,
       });
     }
-    window.addEventListener('resize', handleResize);
-    // Call handler right away so state gets updated with initial window size
-    handleResize();
-    // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  return windowSize;
+    window.addEventListener('resize', updateDimensions);
+    updateDimensions();
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [selector]);
+  return dimensions;
 }
