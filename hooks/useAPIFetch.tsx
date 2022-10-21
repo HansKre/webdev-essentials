@@ -11,10 +11,8 @@ export default function useAPIFetch({ url, timeout }: Props) {
   const [error, setError] = useState<{ code: number; text: string }>();
   const [data, setData] = useState();
 
-  useEffect(async () => {
-    if (url) {
-      setError(undefined);
-      setIsLoading(true);
+  useEffect(() => {
+    async function fetchData() {
       const response = await fetchWithTimeout(url, { timeout });
       if (response && response.status === 200) {
         const json = await (response as Response).json();
@@ -24,6 +22,16 @@ export default function useAPIFetch({ url, timeout }: Props) {
         setIsLoading(false);
         setError({ code: response.status, text: response.statusText });
       }
+    }
+
+    if (url) {
+      setError(undefined);
+      setIsLoading(true);
+      fetchData().catch((e) => {
+        console.log(e);
+        setIsLoading(false);
+        setError({ code: 500, text: 'Internal Server Error' });
+      });
     }
   }, [url]);
 

@@ -1,4 +1,17 @@
-# Development and testing locally a `npm`-module
+# NPM Modules
+
+## Publishing
+
+```sh
+npm install
+# make code changes
+# bump lib-version in package.json
+# commit & push code
+npm run build
+npm publish
+```
+
+## Development and testing locally a `npm`-module
 
 - We first need to create a symbolic link in the global `node_modules` folder (the folder where packages are added with `npm install -g <package>`)
 - To find out the currently configured global `node_modules` folder, run: `npm prefix -g`
