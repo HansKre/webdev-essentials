@@ -17,7 +17,8 @@ type Dimensions = {
  * @example
  * const { width, height } = useWindowResize({ selector: "#root main > article[tabIndex='-1']" })
  */
-export function useWindowResize({ selector }: Props): Dimensions {
+export function useWindowResize(options: Props = { selector: '' }): Dimensions {
+  const { selector } = options;
   const [dimensions, setDimensions] = useState<Dimensions>({
     width: 0,
     height: 0,

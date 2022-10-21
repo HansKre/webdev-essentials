@@ -1,4 +1,4 @@
-import useWindowSize from './useWindowResize';
+import { useWindowResize } from './useWindowResize';
 
 type Limit = 'up' | 'down' | 'between' | 'only';
 
@@ -13,7 +13,7 @@ function useBreakPoint(
   start: keyof typeof Breakpoint,
   end?: keyof typeof Breakpoint
 ): boolean {
-  const { width: windowWidth } = useWindowSize();
+  const { width: windowWidth } = useWindowResize();
   if (limit === 'only') {
     return windowWidth === Breakpoint[start];
   }
