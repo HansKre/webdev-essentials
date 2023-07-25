@@ -5,10 +5,11 @@
 ```sh
 npm install
 # make code changes
+# commit & push code
 # bump lib-version in package.json
 npm version patch #patch|minor|major
-# commit & push code
-npm run build
+npm login
+# npm run build <-- not needed if prepublish-script exists and does that
 npm publish
 ```
 
@@ -101,6 +102,13 @@ If `npm link webdev-essentials` does not work, you can install it by running: `n
   - to unlink from the other project: `npm unlink --no-save <yourpackagename>`
 
 [Source: The 30-second guide to publishing a TypeScript package to NPM](https://cameronnokes.com/blog/the-30-second-guide-to-publishing-a-typescript-package-to-npm/)
+
+### Publishing for the first time
+
+- check that you are logged in to NPM: `npm whoami`
+  - log in, if not: `npm login`
+- run `npm run build && npm publish` to publish package for the first time
+  - every next time, you'll need to run `npm version patch|minor|major && npm run build && npm publish`
 
 ## Rest in TypeScript
 
