@@ -8,7 +8,8 @@ A collection of useful hooks and utils for web development.
 │   ├── useBreakPoint.tsx
 │   └── useWindowResize.tsx
 └── utils
+    ├── classNames.ts
     ├── fetchWithTimeout.ts
     ├── randomFromTo.ts
-    └── userLanguage.ts
+    └── validators.ts
 ```
