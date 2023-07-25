@@ -1,6 +1,6 @@
 {
   "name": "webdev-essentials",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A collection of useful hooks and utils for web development.",
   "scripts": {
     "build": "tsc",
